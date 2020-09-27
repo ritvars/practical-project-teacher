@@ -11,15 +11,6 @@ import library.configuration.DbSessionHolder;
 
 public abstract class CrudRepository<T> {
 
-    public T findOne(Long id, Class<T> clazz) {
-        try {
-            return openSession().find(clazz, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
     public void save(T entity) {
         Transaction transaction = null;
         try {
@@ -41,6 +32,15 @@ public abstract class CrudRepository<T> {
 
     public void delete(T entity) {
         runInTransaction((session) -> session.delete(entity));
+    }
+
+    protected T findOne(Long id, Class<T> clazz) {
+        try {
+            return openSession().find(clazz, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     private void runInTransaction(Consumer<Session> operation) {
