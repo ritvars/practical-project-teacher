@@ -28,7 +28,9 @@ public class BooksController implements Initializable {
 
     @FXML
     private void addBook(ActionEvent event) {
-        ViewLoader.load(getClass().getResource("/ui/book/add_book.fxml"), "Add book");
+        BookAddController controller = (BookAddController) ViewLoader
+                .load(getClass().getResource("/ui/book/add_book.fxml"), "Add book");
+        controller.addPostOperationCallback(this::populateTable);
     }
 
     @FXML
@@ -40,6 +42,7 @@ public class BooksController implements Initializable {
         BookAddController controller = (BookAddController) ViewLoader.load(getClass()
                 .getResource("/ui/book/add_book.fxml"), "Edit book");
         controller.setEditable(book);
+        controller.addPostOperationCallback(this::populateTable);
     }
 
     @FXML

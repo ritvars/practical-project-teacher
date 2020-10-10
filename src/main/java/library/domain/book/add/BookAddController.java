@@ -28,9 +28,15 @@ public class BookAddController implements Initializable {
 
     private Book editable;
 
+    private Runnable closeDialogCallback;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+    }
+
+    public void addPostOperationCallback(Runnable callback) {
+        this.closeDialogCallback = callback;
     }
 
     public void setEditable(Book book) {
@@ -69,6 +75,7 @@ public class BookAddController implements Initializable {
         }
         clearEntries();
         closeStage();
+        closeDialogCallback.run();
     }
 
     @FXML
