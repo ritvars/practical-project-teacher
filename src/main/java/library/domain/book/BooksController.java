@@ -48,7 +48,7 @@ public class BooksController implements Initializable {
         if (book == null) {
             return;
         }
-        bookRepository.delete(book);
+        bookRepository.delete(book.getId());
         populateTable();
     }
 
@@ -62,6 +62,7 @@ public class BooksController implements Initializable {
         TableColumn<Book, String> column3 = new TableColumn<>("Description");
         column3.setCellValueFactory(new PropertyValueFactory<>("description"));
 
+        //this will call getAuthorFullName() on Book class instance
         TableColumn<Book, String> column4 = new TableColumn<>("Author");
         column4.setCellValueFactory(new PropertyValueFactory<>("authorFullName"));
 

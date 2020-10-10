@@ -1,18 +1,17 @@
 package library.configuration;
 
-import library.domain.book.Book;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
-import library.domain.author.Author;
-import library.domain.review.Review;
-
 import java.util.List;
 import java.util.Properties;
+
+import library.domain.author.Author;
+import library.domain.book.Book;
+import library.domain.review.Review;
 
 import static java.util.Arrays.asList;
 

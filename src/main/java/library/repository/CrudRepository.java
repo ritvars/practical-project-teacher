@@ -13,8 +13,7 @@ public abstract class CrudRepository<T> {
 
     public void save(T entity) {
         Transaction transaction = null;
-        try {
-            Session session = openSession();
+        try (Session session = openSession()) {
             transaction = session.beginTransaction();
             session.save(entity);
             transaction.commit();
@@ -26,8 +25,8 @@ public abstract class CrudRepository<T> {
         }
     }
 
-    public void update(T entity) {
-        runInTransaction((session) -> session.update(entity));
+    public void merge(T entity) {
+        runInTransaction((session) -> session.merge(entity));
     }
 
     public void delete(T entity) {
@@ -35,18 +34,17 @@ public abstract class CrudRepository<T> {
     }
 
     protected T findOne(Long id, Class<T> clazz) {
-        try {
-            return openSession().find(clazz, id);
+        try (Session session = openSession()) {
+            return session.find(clazz, id);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
         }
     }
 
-    private void runInTransaction(Consumer<Session> operation) {
+    protected void runInTransaction(Consumer<Session> operation) {
         Transaction transaction = null;
-        try {
-            Session session = openSession();
+        try (Session session = openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
             // save the person object
@@ -62,8 +60,8 @@ public abstract class CrudRepository<T> {
     }
 
     protected List<T> findAll(String query, Class<T> clazz) {
-        try {
-            return openSession().createQuery(query, clazz).list();
+        try (Session session = openSession()) {
+            return session.createQuery(query, clazz).list();
         } catch (Exception ex) {
             ex.printStackTrace();
             return Collections.emptyList();

@@ -65,7 +65,7 @@ public class BookAddController implements Initializable {
             book.setTitle(bookTitle);
             book.setDescription(bookDescription);
             book.setAuthor(author);
-            bookRepository.update(book);
+            bookRepository.merge(book);
         }
         clearEntries();
         closeStage();

@@ -1,11 +1,18 @@
 package library.domain.author;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import library.domain.book.Book;
 
 @Entity
 @Table(name = "author")
@@ -16,6 +23,9 @@ public class Author {
     private Long id;
     @Column(name = "first_name") private String firstName;
     @Column(name = "last_name") private String lastName;
+
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
+    private Set<Book> book = new HashSet<>();
 
     public Author() {
     }
@@ -51,5 +61,13 @@ public class Author {
 
     public String getFullName() {
         return firstName + " " + lastName;
+    }
+
+    public Set<Book> getBook() {
+        return book;
+    }
+
+    public void setBook(Set<Book> book) {
+        this.book = book;
     }
 }
